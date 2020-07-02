@@ -23,11 +23,11 @@
 // To compile for FOCBOX Unity, uncomment the following line.
 //#define FOCBOX_UNITY 1
 
-#define VESC_COUNT 2  // number of controllers: 1 = single, 2 = dual (set to 1 for FOCBOX Unity unless you have more than 1)
-#define MOTOR_POLE_PAIRS 7
-#define WHEEL_DIAMETER_MM 192
-#define MOTOR_PULLEY_TEETH 15
-#define WHEEL_PULLEY_TEETH 72
+#define VESC_COUNT 1  // number of controllers: 1 = single, 2 = dual (set to 1 for FOCBOX Unity unless you have more than 1)
+#define MOTOR_POLE_PAIRS 10
+#define WHEEL_DIAMETER_MM 5500
+#define MOTOR_PULLEY_TEETH 10
+#define WHEEL_PULLEY_TEETH 44
 
 // Affects the speed indicator. If MAX_SPEED_KPH is exceeded, no major disaster will happen.
 // The speed indicator will merely indicate the current speed as the max speed (all blue rectangles
@@ -135,10 +135,11 @@
 //#define SIMPLE_HORIZONTAL_SCREEN_ENABLED 1
 //#define SIMPLE_HORIZONTAL_SCREEN_WITH_BATTERY_CURRENT_ENABLED 1
 //#define SIMPLE_HORIZONTAL_SCREEN_WITH_MOTOR_CURRENT_ENABLED 1
-#define SIMPLE_VERTICAL_SCREEN_ENABLED 1
+//#define SIMPLE_VERTICAL_SCREEN_ENABLED 1
 //#define SIMPLE_VERTICAL_SCREEN_WITH_BATTERY_CURRENT_ENABLED 1
 //#define SIMPLE_VERTICAL_SCREEN_WITH_MOTOR_CURRENT_ENABLED 1
-#define TEXT_SCREEN_ENABLED 1
+//#define TEXT_SCREEN_ENABLED 1
+#define OLED_SCREEN 1
 
 // Information to be displayed on the text screen. Only relevant if TEXT_SCREEN_ENABLED is set.
 // Available options:
