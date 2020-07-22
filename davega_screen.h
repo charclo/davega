@@ -20,6 +20,8 @@
 #ifndef DAVEGA_SCREEN_H
 #define DAVEGA_SCREEN_H
 
+#define HEARTBEAT_SIZE 4
+
 #include "davega_data.h"
 
 typedef enum {

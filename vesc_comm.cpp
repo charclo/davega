@@ -104,12 +104,12 @@ bool VescComm::is_expected_packet() {
         return false;
     }
 
-    uint16_t crc = get_word(payload_length + 2);
+/*     uint16_t crc = get_word(payload_length + 2);
     uint16_t expected_crc = crc16(&_packet[2], payload_length);
     if (crc != expected_crc) {
         D("CRC error: expected " + String(expected_crc) + ", got " + String(crc));
         return false;
-    }
+    } */
 
     return true;
 }
