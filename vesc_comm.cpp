@@ -19,6 +19,7 @@
 
 #include "vesc_comm.h"
 #include "crc.h"
+#include "davega_config.h"
 
 // TODO: Make vesc_serial a parameter of vesc_comm_init.
 #ifdef DEBUG
@@ -52,7 +53,12 @@ void VescComm::init(uint32_t baud) {
 
 uint8_t VescComm::fetch_packet(uint16_t timeout) {
     vesc_serial.write(GET_VALUES_PACKET, sizeof(GET_VALUES_PACKET));
-    return receive_packet(timeout);
+    #ifdef SIM_VALUES
+        _bytes_read  = 78;
+        return 0;
+    #else
+        return receive_packet(timeout);
+    #endif
 }
 
 uint8_t VescComm::receive_packet(uint16_t timeout) {

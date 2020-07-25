@@ -178,6 +178,6 @@ void DavegaTextScreen::_write_line_buffer(int lineno, uint16_t color) {
     _line_buffer[MAX_LINE_LENGTH] = '\0';
 
     int y = lineno * (_config->big_font ? 19 : 12) + 5;
-    _tft->setFont(_config->big_font ? Terminal11x16 : Terminal6x8, true);
+    _tft->setFont(_config->big_font ? Terminal12x16 : Terminal6x8, true);
     _tft->drawText(5, y, _line_buffer, color);
 }

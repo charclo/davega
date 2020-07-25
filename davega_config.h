@@ -21,7 +21,13 @@
 #define DAVEGA_CONFIG_H
 
 // enable debug
-// #define DEBUG
+//#define DEBUG
+
+// enable simulated values
+#define SIM_VALUES
+
+// arduino nano every
+#define ARDUINO_NANO
 
 // To compile for FOCBOX Unity, uncomment the following line.
 //#define FOCBOX_UNITY 1

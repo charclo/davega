@@ -34,9 +34,9 @@
 #define D(x)
 #endif
 
-#define BUTTON_1_PIN A3
-#define BUTTON_2_PIN A2
-#define BUTTON_3_PIN A1
+#define BUTTON_1_PIN 2
+#define BUTTON_2_PIN 3
+#define BUTTON_3_PIN 4
 
 #define LEN(X) (sizeof(X) / sizeof(X[0]))
 
@@ -213,11 +213,11 @@ void setup() {
     scr->reset();
     scr->update(&data);
 
-    vesc_comm.fetch_packet();
-    while (!vesc_comm.is_expected_packet()) {
-        scr->heartbeat(UPDATE_DELAY, false);
-        vesc_comm.fetch_packet();
-    }
+    //vesc_comm.fetch_packet();
+    //while (!vesc_comm.is_expected_packet()) {
+    //    scr->heartbeat(UPDATE_DELAY, false);
+    //    vesc_comm.fetch_packet();
+    //}
 
     float last_volts = eeprom_read_volts();
     float current_volts = vesc_comm.get_voltage();
