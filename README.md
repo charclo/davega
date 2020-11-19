@@ -5,7 +5,7 @@
 
 Roxie displays speed, battery capacity, traveled distance and other useful info retrieved from a [VESC](https://www.vesc-project.com/) based controller.
 
-![Roxie](img/roxie.jpg)
+![Roxie](img/roxie.jpeg)
 
 This repository contains the Roxie firmware. The gerber files can be downloaded from [roxie-hardware repository](https://github.com/charclo/roxie-hardware)
 
