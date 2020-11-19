@@ -13,16 +13,20 @@
     along with Roxie firmware.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-#ifndef BUTTONS_H
-#define BUTTONS_H
+#include "ili9225_screen.h"
+#include "roxie_config.h"
 
-#include "data.h"
-#include "screen.h"
+TFT_22_ILI9225 tft = TFT_22_ILI9225(TFT_RST, TFT_RS, TFT_CS, TFT_LED, 10); // hardware SPI
+// TFT_22_ILI9225 tft = TFT_22_ILI9225(TFT_RST, TFT_RS, TFT_CS, TFT_SDI, TFT_CLK, TFT_LED, 200); // software SPI
+TFT_22_ILI9225* p_tft = nullptr;
 
-void read_buttons(t_session_data &session_data, int32_t* initial_trip_meters, int32_t* tachometer, Screen* scr);
-void button1_changed();
-void button2_pressed();
-void button3_pressed();
-
-
-#endif //BUTTONS_H
+void ILI9225Screen::init(t_screen_config *config) {
+    Screen::init(config);
+    if (!p_tft) {
+        p_tft = &tft;
+        p_tft->begin();
+        p_tft->setOrientation(config->orientation);
+        p_tft->setBackgroundColor(COLOR_BLACK);
+    }
+    _tft = p_tft;
+}

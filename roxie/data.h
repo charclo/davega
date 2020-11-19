@@ -18,8 +18,6 @@
 #ifndef DATA_H
 #define DATA_H
 
-#define LEN(X) (sizeof(X) / sizeof(X[0]))
-
 #include "vesc_comm.h"
 
 typedef struct {
@@ -28,15 +26,6 @@ typedef struct {
     float max_speed_kph;
     float min_voltage;
     int32_t trip_meters;
-
-    // TODO:
-    // max_motor_temp
-    // max_fet_temp
-    // max_current
-    // min_current
-    // wh_spent
-    // wh_per_km (derived)
-    // range_km (derived)
 } t_session_data;
 
 typedef struct {
@@ -47,12 +36,11 @@ typedef struct {
     float duty_cycle;
     float voltage;
     float voltage_percent;
-    int32_t mah;
+    int32_t mah_left;
     float mah_reset_progress;
     float mah_percent;
     float battery_percent;
     float speed_kph;
-    float speed_percent;
     float trip_km;
     float session_reset_progress;
     float total_km;
@@ -65,5 +53,14 @@ typedef struct {
     float tachometer;
     float rpm;
 } t_data;
+
+typedef struct {
+    const char* fw_version;
+    bool imperial_units;
+    bool use_fahrenheit;
+    bool per_cell_voltage;
+    uint8_t battery_cells;
+    uint8_t orientation;
+} t_screen_config;
 
 #endif //DATA_H

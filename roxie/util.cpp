@@ -16,9 +16,8 @@
 */
 
 #include "util.h"
-#include "vesc_comm.h"
 #include "data.h"
-#include "roxie_eeprom.h"
+#include "eeprom_backup.h"
 #include "TFT_22_ILI9225.h"
 
 #define LEN(X) (sizeof(X) / sizeof(X[0]))
@@ -26,40 +25,13 @@ const float discharge_ticks[] = DISCHARGE_TICKS;
 
 char fw_version_buffer[6];
 
-uint16_t primary_item_color(t_screen_item screen_item, t_data* data, t_screen_config* config) {
+uint16_t item_color(float speed_kph) {
     uint16_t color = COLOR_WHITE;
-    if (screen_item == SCR_BATTERY_CURRENT || screen_item == SCR_MOTOR_CURRENT) {
-        float value = screen_item == SCR_BATTERY_CURRENT ? data->battery_amps : data->motor_amps;
-        if (value < 0)
-            color = COLOR_RED;
-        if (value >= 100)
-            color = COLOR_YELLOW;
-        if (value >= 200)
-            color = COLOR_BLUEVIOLET;
-    }
-    else {
-        // speed
-        if (data->speed_kph > SS_RED_SPEED_KPH)
-            color = COLOR_RED;
-        else if (data->speed_kph > SS_YELLOW_SPEED_KPH)
-            color = COLOR_YELLOW;
-    }
+    if (speed_kph > SS_RED_SPEED_KPH)
+        color = COLOR_RED;
+    else if (speed_kph > SS_YELLOW_SPEED_KPH)
+        color = COLOR_YELLOW;
     return color;
-}
-
-float primary_item_value(t_screen_item screen_item, t_data* data, t_screen_config* config) {
-    float value;
-    switch (screen_item) {
-        case SCR_BATTERY_CURRENT:
-            value = data->battery_amps;
-            break;
-        case SCR_MOTOR_CURRENT:
-            value = data->motor_amps;
-            break;
-        default:
-            value = convert_speed(data->speed_kph, config->imperial_units);
-    }
-    return value;
 }
 
 const char* make_fw_version(const char* fw_version, const char* revision_id) {
@@ -76,17 +48,12 @@ const char* make_fw_version(const char* fw_version, const char* revision_id) {
     }
 }
 
-float convert_distance(float distance_km, bool imperial_units)
+float convert_km_to_miles(float kilometer, bool imperial_units)
 {
     if (imperial_units)
-        return distance_km * KM_PER_MILE;
+        return kilometer * KM_PER_MILE;
     else
-        return distance_km;
-}
-
-float convert_speed(float speed_kph, bool imperial_units)
-{
-    return convert_distance(speed_kph, imperial_units);
+        return kilometer;
 }
 
 float convert_temperature(float temp_celsius, bool imperial_units) {
@@ -124,9 +91,9 @@ const char* vesc_fault_code_to_string(vesc_comm_fault_code fault_code) {
     }
 }
 
-int32_t rotations_to_meters(int32_t rotations) {
+int32_t rotations_to_meters(int32_t erpm) {
     float gear_ratio = float(WHEEL_PULLEY_TEETH) / float(MOTOR_PULLEY_TEETH);
-    return (rotations / MOTOR_POLE_PAIRS / gear_ratio) * WHEEL_DIAMETER_MM * PI / 1000;
+    return (erpm / MOTOR_POLE_PAIRS / gear_ratio) * WHEEL_DIAMETER_MM * PI / 1000;
 }
 
 float erpm_to_kph(uint32_t erpm) {
