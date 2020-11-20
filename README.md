@@ -1,4 +1,4 @@
-*This repository contains the firmware for the open source Roxie (based on [DAVEga OS](https://github.com/janpom/davega)).*
+*This repository contains the firmware for the open source Roxie (based on the no longer maintained [DAVEga OS](https://github.com/janpom/davega)).*
 **For DAVEGA X (not open source), please go to [davega.eu](https://davega.eu).**
 
 -----
