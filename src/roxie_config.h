@@ -17,7 +17,7 @@
 #define ROXIE_CONFIG_H
 
 // uncomment if not using arduino nano every
-#define ARDUINO_NANO_EVERY
+// #define ARDUINO_NANO_EVERY
 
 #define VESC_COUNT 1  // number of controllers: 1 = single, 2 = dual (set to 1 for FOCBOX Unity unless you have more than 1)
 #define MOTOR_POLE_PAIRS 2

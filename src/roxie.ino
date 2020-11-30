@@ -47,7 +47,7 @@ void setup() {
     pinMode(BUTTON_2_PIN, INPUT_PULLUP);
     attachInterrupt(digitalPinToInterrupt(BUTTON_2_PIN), button2_pressed, FALLING);
     pinMode(BUTTON_3_PIN, INPUT_PULLUP);
-    attachInterrupt(digitalPinToInterrupt(BUTTON_3_PIN), button3_pressed, FALLING);
+    attachInterrupt(digitalPinToInterrupt(BUTTON_3_PIN), button3_changed, CHANGE);
 
     // Initialize communication with computer for debugging and with vesc
     Serial.begin(115200);
@@ -67,7 +67,6 @@ void setup() {
     vertical_screen.init(&screen_config);
     vertical_screen.draw_basic();
 
-    Serial.println("Getting startup value for the tachometer from vesc");
     vesc_comm.fetch_packet();
     while(!vesc_comm.is_expected_packet()) {
         vertical_screen.heartbeat(UPDATE_DELAY, false);
@@ -97,7 +96,8 @@ void loop() {
 }
 
 void check_buttons(){
-    if(check_button1(&data)){
+    check_button1(&data);
+    if(check_button3(&data)){
         startup_trip_meters = 0 - rotations_to_meters(data.tachometer / 6);
     }
 }

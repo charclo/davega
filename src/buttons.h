@@ -26,9 +26,10 @@
  * @return true if button was pressed
  */
 bool check_button1(t_data* _data);
+bool check_button3(t_data* _data);
 void button1_changed();
 void button2_pressed();
-void button3_pressed();
+void button3_changed();
 
 
 #endif //BUTTONS_H
