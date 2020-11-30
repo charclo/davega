@@ -18,6 +18,7 @@
 #include "util.h"
 #include "tft_util.h"
 #include <TFT_22_ILI9225.h>
+#include "eeprom_backup.h"
 
 
 void VerticalScreen::draw_basic() {
@@ -117,4 +118,15 @@ void VerticalScreen::heartbeat(uint32_t duration_ms, bool successful_vesc_read) 
     _tft->fillRectangle(HEARTBEAT_X, HEARBEAT_Y, HEARTBEAT_X + HEARTBEAT_SIZE, HEARBEAT_Y + HEARTBEAT_SIZE, color);
     delay(duration_ms);
     _tft->fillRectangle(HEARTBEAT_X, HEARBEAT_Y, HEARTBEAT_X + HEARTBEAT_SIZE, HEARBEAT_Y + HEARTBEAT_SIZE, COLOR_BLACK);
+}
+
+bool VerticalScreen::process_buttons(t_data *data, bool long_click){
+    // Reset session and also write this to the EEPROM
+    data->session->trip_meters = 0;
+    data->session->max_speed_kph = 0;
+    data->session->millis_elapsed = 0;
+    data->session->millis_riding = 0;
+    // session_data.min_voltage = data.voltage;
+    eeprom_write_session_data(*data->session);
+    return false;
 }

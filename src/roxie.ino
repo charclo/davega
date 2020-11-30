@@ -18,7 +18,7 @@
 #include "util.h"
 #include "screen.h"
 #include "vesc_comm.h"
-#include "buttons.h"
+#include "button_interrupt.h"
 #include "vertical_screen.h"
 
 #ifdef FOCBOX_UNITY
@@ -39,19 +39,20 @@ int32_t last_total_meters_stored;
 int32_t last_stopped;
 int32_t last_rpm;
 
+Button button1 = Button(BUTTON_1_PIN);
+Button button2 = Button(BUTTON_2_PIN);
+Button button3 = Button(BUTTON_3_PIN);
+
 void setup() {
     // delay(1000); // Only for testing the EEPROM
-    // Initialize the buttons with interrupts. Drawing the screen takes a long time and else buttons feel sluggish.
-    pinMode(BUTTON_1_PIN, INPUT_PULLUP);
-    attachInterrupt(digitalPinToInterrupt(BUTTON_1_PIN), button1_changed, CHANGE);
-    pinMode(BUTTON_2_PIN, INPUT_PULLUP);
-    attachInterrupt(digitalPinToInterrupt(BUTTON_2_PIN), button2_pressed, FALLING);
-    pinMode(BUTTON_3_PIN, INPUT_PULLUP);
-    attachInterrupt(digitalPinToInterrupt(BUTTON_3_PIN), button3_changed, CHANGE);
 
     // Initialize communication with computer for debugging and with vesc
     Serial.begin(115200);
     vesc_comm.init(115200);
+
+    attachInterrupt(digitalPinToInterrupt(BUTTON_1_PIN), button1_changed, CHANGE);
+    attachInterrupt(digitalPinToInterrupt(BUTTON_2_PIN), button2_changed, CHANGE);
+    attachInterrupt(digitalPinToInterrupt(BUTTON_3_PIN), button3_changed, CHANGE);
 
     screen_config = { make_fw_version(FW_VERSION, REVISION_ID), IMPERIAL_UNITS, USE_FAHRENHEIT,
                     SHOW_AVG_CELL_VOLTAGE, BATTERY_S, SCREEN_ORIENTATION};
@@ -96,15 +97,19 @@ void loop() {
 }
 
 void check_buttons(){
-    check_button1(&data);
-    if(check_button3(&data)){
+
+    button1.update_button();
+    button2.update_button();
+    button3.update_button();
+
+    if(button2.get_long_click()){
         startup_trip_meters = 0 - rotations_to_meters(data.tachometer / 6);
-    }
+        vertical_screen.process_buttons(&data, true);
+    } 
 }
 
 void load_startup_values(){
     // Store the trip and total meter values on startup
-    Serial.println("Getting startup values");
     t_session_data startup = eeprom_read_session_data();
     startup_trip_meters = startup.trip_meters;
     startup_total_meters = eeprom_read_total_distance(); // TODO: read from data instead of EEPROM
@@ -141,4 +146,18 @@ void process_other_values(){
     }
 
     last_rpm = data.rpm;
+}
+
+
+//ISR routines for the buttons
+void button1_changed(){
+    button1.button_changed();
+}
+
+void button2_changed(){
+    button2.button_changed();
+}
+
+void button3_changed(){
+    button3.button_changed();
 }

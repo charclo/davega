@@ -13,23 +13,23 @@
     along with Roxie firmware.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-#ifndef BUTTONS_H
-#define BUTTONS_H
+#ifndef SCREEN_H
+#define SCREEN_H
+
+#define HEARTBEAT_SIZE 4
 
 #include "data.h"
-#include "screen.h"
 
-/**
- * @brief Check to see if button 1 was pressed. In case it was pressed, reset the session.
- * 
- * @param _data 
- * @return true if button was pressed
- */
-bool check_button1(t_data* _data);
-bool check_button3(t_data* _data);
-void button1_changed();
-void button2_pressed();
-void button3_changed();
+class Screen {
+public:
+    virtual void init(t_screen_config* config) { _config = config; };
+    void draw_basic();
+    void update();
+    void heartbeat();
+    bool process_buttons();
 
+protected:
+    t_screen_config* _config;
+};
 
-#endif //BUTTONS_H
+#endif //SCREEN_H
