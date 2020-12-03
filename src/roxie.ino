@@ -89,8 +89,8 @@ void setup()
     float voltage1 = test.get_voltage();
     voltage1 += voltage1;
 
-    // ssd1306_screen.init();
-    ssd1306_screen.update();
+    ssd1306_screen.init();
+    //     ssd1306_screen.update();
 }
 
 void loop()
