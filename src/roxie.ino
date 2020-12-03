@@ -20,6 +20,21 @@
 #include "vesc_comm.h"
 #include "button_interrupt.h"
 #include "vertical_screen.h"
+#include "screen_data.h"
+
+#include <SPI.h>
+#include <Wire.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_SSD1306.h>
+#include "ssd1306_screen.h"
+
+#define SCREEN_WIDTH 128 // OLED display width, in pixels
+#define SCREEN_HEIGHT 64 // OLED display height, in pixels
+
+// Declaration for an SSD1306 display connected to I2C (SDA, SCL pins)
+#define OLED_RESET     -1 // Reset pin # (or -1 if sharing Arduino reset pin)
+
+// #include "ssd1306_screen.h"
 
 #ifdef FOCBOX_UNITY
 #include "vesc_comm_unity.h"
@@ -43,11 +58,14 @@ Button button1 = Button(BUTTON_1_PIN);
 Button button2 = Button(BUTTON_2_PIN);
 Button button3 = Button(BUTTON_3_PIN);
 
+Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
+SSD1306Screen ssd1306_screen;
+
 void setup() {
     // delay(1000); // Only for testing the EEPROM
 
     // Initialize communication with computer for debugging and with vesc
-    Serial.begin(115200);
+    //Serial.begin(115200);
     vesc_comm.init(115200);
 
     attachInterrupt(digitalPinToInterrupt(BUTTON_1_PIN), button1_changed, CHANGE);
@@ -77,6 +95,29 @@ void setup() {
 
     load_startup_values();
     vertical_screen.update(&data);
+
+    ScreenData test = ScreenData(&data);
+    float voltage1 = test.get_voltage();
+    voltage1 += voltage1;
+
+        // SSD1306_SWITCHCAPVCC = generate display voltage from 3.3V internally
+    if(!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) { 
+        for(;;){
+        pinMode(LED_BUILTIN, OUTPUT);
+        digitalWrite(LED_BUILTIN, HIGH);   // turn the LED on (HIGH is the voltage level)
+        delay(1000);                       // wait for a second
+        digitalWrite(LED_BUILTIN, LOW);    // turn the LED off by making the voltage LOW
+        delay(1000);  
+        }
+    }
+
+    // Show initial display buffer contents on the screen --
+    // the library initializes this with an Adafruit splash screen.
+    display.display();
+    delay(2000); // Pause for 2 seconds
+
+    ssd1306_screen = SSD1306Screen(display);
+    ssd1306_screen.update();
 }
 
 void loop() {
@@ -93,6 +134,8 @@ void loop() {
 
     vertical_screen.update(&data);
     vertical_screen.heartbeat(UPDATE_DELAY, true);
+
+    // ssd1306_screen.update();
 
 }
 

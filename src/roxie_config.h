@@ -159,14 +159,14 @@
 	#define BUTTON_3_PIN PB5
 #endif
 
-/* #ifndef ARDUINO_NANO_EVERY
+#ifndef ARDUINO_NANO_EVERY
     #define TFT_RS  PA2   // REGISTER SELECT
     #define TFT_CS  PA4  // CS
     #define TFT_RST PA0
     #define TFT_SDI PA7  // MOSI
     #define TFT_CLK PA5  // SCK
     #define TFT_LED 0
-#else */
+#else
 
     #define TFT_RS  9   // REGISTER SELECT
     #ifdef ARDUINO_NANO_EVERY
@@ -179,6 +179,6 @@
     #define TFT_SDI 11  // MOSI
     #define TFT_CLK 13  // SCK
     #define TFT_LED 0
-// #endif
+#endif
 
 #endif //ROXIE_CONFIG_H
