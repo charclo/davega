@@ -17,7 +17,6 @@
 #include "roxie_config.h"
 
 TFT_22_ILI9225 tft = TFT_22_ILI9225(TFT_RST, TFT_RS, TFT_CS, TFT_LED, 10); // hardware SPI
-// TFT_22_ILI9225 tft = TFT_22_ILI9225(TFT_RST, TFT_RS, TFT_CS, TFT_SDI, TFT_CLK, TFT_LED, 200); // software SPI
 TFT_22_ILI9225* p_tft = nullptr;
 
 void ILI9225Screen::init(t_screen_config *config) {

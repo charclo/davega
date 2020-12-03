@@ -23,30 +23,19 @@
 #include <Adafruit_SSD1306.h>
 #include "screen_data.h"
 
-
-
-#define SCREEN_WIDTH 128 // OLED display width, in pixels
-#define SCREEN_HEIGHT 64 // OLED display height, in pixels
-
-// Declaration for an SSD1306 display connected to I2C (SDA, SCL pins)
-#define OLED_RESET     -1 // Reset pin # (or -1 if sharing Arduino reset pin)
-
-class SSD1306Screen {
+class SSD1306Screen
+{
 public:
-    SSD1306Screen() {};
-    SSD1306Screen(Adafruit_SSD1306 display);//ScreenData screen_data);
+    SSD1306Screen();
+    //void init(); //ScreenData screen_data);
     void update();
 
 private:
     ScreenData _screen_data;
-    //Adafruit_SSD1306 _display(int _screen_width, SCREEN_HEIGHT, &Wire, OLED_RESET);
-    int _screen_width = 128;
-    int _screen_height = 64;
-    // Declaration for an SSD1306 display connected to I2C (SDA, SCL pins)
-    int _oled_reset = -1;
-    Adafruit_SSD1306 _display;    
-
+    uint8_t _screen_width = 128;
+    uint8_t _screen_height = 64;
+    uint8_t _oled_reset = -1;
+    Adafruit_SSD1306 _display;
 };
-
 
 #endif //SSD1306_SCREEN_H
