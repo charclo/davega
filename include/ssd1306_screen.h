@@ -27,7 +27,7 @@ class SSD1306Screen
 {
 public:
     // SSD1306Screen();
-    void init(); //ScreenData screen_data);
+    void init(ScreenData screen_data);
     void update();
 
 private:

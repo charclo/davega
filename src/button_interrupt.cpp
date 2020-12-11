@@ -12,10 +12,10 @@ bool Button::update_button(){
 	if (_risen_flag){
 		if (_fallen_flag == true){
 			if(_risen_time - _fallen_time < DEBOUNCE_DELAY){
-				//Serial.println("But->No action:  " + String(_risen_time - _fallen_time) + " ms");
+				Serial3.println("But->No action:  " + String(_risen_time - _fallen_time) + " ms");
 			}
 			else{
-				//Serial.println("But->Press:  " + String(_risen_time - _fallen_time) + " ms");
+				Serial3.println("But->Press:  " + String(_risen_time - _fallen_time) + " ms");
 				_clicked = true;
 			}
 			_fallen_flag = false;
@@ -25,7 +25,7 @@ bool Button::update_button(){
 
 	if (_fallen_flag == true){
 		if ((millis() - _fallen_time) > LONG_PRESS){
-			//Serial.println("But->Long press:  " + String(millis() - _fallen_time) + " ms");
+			Serial3.println("But->Long press:  " + String(millis() - _fallen_time) + " ms");
 			_long_click = true;
 			_fallen_flag = false;
 			return true;

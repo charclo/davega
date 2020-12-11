@@ -20,7 +20,7 @@
 // #define ARDUINO_NANO_EVERY
 
 #define VESC_COUNT 1  // number of controllers: 1 = single, 2 = dual (set to 1 for FOCBOX Unity unless you have more than 1)
-#define MOTOR_POLE_PAIRS 2
+#define MOTOR_POLE_PAIRS 3
 #define WHEEL_DIAMETER_MM 550
 #define MOTOR_PULLEY_TEETH 1
 #define WHEEL_PULLEY_TEETH 5
@@ -31,7 +31,7 @@
 // Affects the speed indicator. If MAX_SPEED_KPH is exceeded, no major disaster will happen.
 // The speed indicator will merely indicate the current speed as the max speed (all blue rectangles
 // filled). It will still show the correct number though.
-#define MAX_SPEED_KPH 35
+#define MAX_SPEED_KPH 25
 
 // Set to true to display the distance in miles and the speed in mph.
 #define IMPERIAL_UNITS false
@@ -139,7 +139,7 @@
 // enable debug
 #define DEBUG
 
-#define DEB(x) Serial.println(x)
+#define DEB(x) Serial3.println(x)
 
 // enable simulated values
 // #define SIM_VALUES

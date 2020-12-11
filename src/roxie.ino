@@ -20,8 +20,8 @@
 #include "vesc_comm.h"
 #include "button_interrupt.h"
 #include "vertical_screen.h"
-#include "screen_data.h"
-#include "ssd1306_screen.h"
+//#include "screen_data.h"
+//#include "ssd1306_screen.h"
 
 #ifdef FOCBOX_UNITY
 #include "vesc_comm_unity.h"
@@ -45,14 +45,17 @@ Button button1 = Button(BUTTON_1_PIN);
 Button button2 = Button(BUTTON_2_PIN);
 Button button3 = Button(BUTTON_3_PIN);
 
-SSD1306Screen ssd1306_screen;
+//SSD1306Screen ssd1306_screen;
+//ScreenData test;
+
+HardwareSerial Serial3(PB11, PB10);
 
 void setup()
 {
     // delay(1000); // Only for testing the EEPROM
 
     // Initialize communication with computer for debugging and with vesc
-    //Serial.begin(115200);
+    Serial3.begin(115200);
     vesc_comm.init(115200);
 
     attachInterrupt(digitalPinToInterrupt(BUTTON_1_PIN), button1_changed, CHANGE);
@@ -85,12 +88,8 @@ void setup()
     load_startup_values();
     vertical_screen.update(&data);
 
-    ScreenData test = ScreenData(&data);
-    float voltage1 = test.get_voltage();
-    voltage1 += voltage1;
-
-    ssd1306_screen.init();
-    //     ssd1306_screen.update();
+    //test = ScreenData(&data);
+    //ssd1306_screen.init(test);
 }
 
 void loop()
@@ -110,7 +109,7 @@ void loop()
     vertical_screen.update(&data);
     vertical_screen.heartbeat(UPDATE_DELAY, true);
 
-    // ssd1306_screen.update();
+    //ssd1306_screen.update();
 }
 
 void check_buttons()

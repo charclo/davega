@@ -15,10 +15,8 @@
 
 #include "ssd1306_screen.h"
 
-void SSD1306Screen::init()
-{
-    //(ScreenData screen_data){
-    // _screen_data = screen_data;
+void SSD1306Screen::init(ScreenData screen_data){
+    _screen_data = screen_data;
     pinMode(LED_BUILTIN, OUTPUT);
 
     _display = Adafruit_SSD1306(_screen_width, _screen_height, &Wire, _oled_reset);
@@ -35,16 +33,22 @@ void SSD1306Screen::init()
         }
     }
 
-    // Show initial display buffer contents on the screen --
-    // the library initializes this with an Adafruit splash screen.
-    _display.display();
-    delay(2000); // Pause for 2 seconds
+    _display.clearDisplay();
+    _display.setTextColor(SSD1306_WHITE);
 }
 
 void SSD1306Screen::update()
 {
     _display.clearDisplay();
-    _display.drawCircle(10, 20, 10, SSD1306_WHITE);
+    // _display.drawCircle(10, 20, 10, SSD1306_WHITE);
+
+    _display.setCursor(10, 10);
+    _display.println("Voltage: " + String(_screen_data.get_voltage()) + "V");
+    _display.setCursor(10, 20);
+    _display.println("Trip km: " + String(_screen_data.get_trip_km()) + "km");
+    _display.setCursor(10, 30);
+    _display.println("Speed: " + String(_screen_data.get_speed()) + "kmph");
+
     _display.display();
-    delay(2000); // Pause for 2 seconds
+
 }

@@ -50,7 +50,7 @@ void VerticalScreen::update(t_data *data) {
     if (data->vesc_fault_code != _last_fault_code)
         draw_basic();
 
-    dtostrf(convert_km_to_miles(data->speed_kph, _config), 4, 1, primary_value);
+    dtostrf(convert_km_to_miles(data->speed_kph, _config->imperial_units), 4, 1, primary_value);
     if (_config->per_cell_voltage)
         dtostrf(data->voltage / _config->battery_cells, 4, 2, value4);
     else

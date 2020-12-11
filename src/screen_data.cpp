@@ -22,3 +22,19 @@ ScreenData::ScreenData(t_data *screen_data){
 float ScreenData::get_voltage(){
     return _screen_data->voltage;
 }
+
+float ScreenData::get_trip_km(){
+    return _screen_data->trip_km;
+}
+
+float ScreenData::get_speed(){
+    return convert_km_to_miles(_screen_data->speed_kph, false);
+}
+
+float ScreenData::convert_km_to_miles(float kilometer, bool imperial_units)
+{
+    if (imperial_units)
+        return kilometer * KM_PER_MILE;
+    else
+        return kilometer;
+}

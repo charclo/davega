@@ -18,14 +18,27 @@
 
 #include "data.h"
 
+#define KM_PER_MILE 0.621371
+
 class ScreenData {
 public:
     ScreenData(){};
     ScreenData(t_data *screen_data);
     float get_voltage();
+    float get_trip_km();
+    float get_speed();
 
 private:
     t_data *_screen_data;
+
+    /**
+     * @brief Convert kilometers to miles
+     * 
+     * @param kilometer
+     * @param imperial_units 
+     * @return float 
+     */
+    float convert_km_to_miles(float kilometer, bool imperial_units);
 
 };
 
