@@ -149,36 +149,17 @@
 
 #define LEN(X) (sizeof(X) / sizeof(X[0]))
 
-#ifdef ARDUINO_NANO_EVERY
+
 #define BUTTON_1_PIN A0
 #define BUTTON_2_PIN A1
 #define BUTTON_3_PIN A2
-#else
-#define BUTTON_1_PIN PB3
-#define BUTTON_2_PIN PB4
-#define BUTTON_3_PIN PB5
-#endif
 
-#ifndef ARDUINO_NANO_EVERY
-#define TFT_RS PA2 // REGISTER SELECT
-#define TFT_CS PA4 // CS
-#define TFT_RST PA0
-#define TFT_SDI PA7 // MOSI
-#define TFT_CLK PA5 // SCK
-#define TFT_LED 0
-#else
 
 #define TFT_RS 9 // REGISTER SELECT
-#ifdef ARDUINO_NANO_EVERY
 #define TFT_CS 8   // CS
 #define TFT_RST 10 // TODO: 12 does not work, check why
-#else
-#define TFT_CS 10 // CS
-#define TFT_RST 12
-#endif
 #define TFT_SDI 11 // MOSI
 #define TFT_CLK 13 // SCK
 #define TFT_LED 0
-#endif
 
 #endif //ROXIE_CONFIG_H
