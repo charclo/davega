@@ -25,12 +25,13 @@
 #define EEPROM_ADDRESS_TOTAL_DISTANCE 13
 #define EEPROM_ADDRESS_SESSION_DATA 17
 
-bool eeprom_is_initialized(uint8_t magic_value) {
+bool eeprom_is_initialized(uint8_t magic_value)
+{
     return EEPROM.read(EEPROM_ADDRESS_MAGIC_BYTE) == magic_value;
 }
 
-
-void eeprom_initialize(uint8_t magic_value, t_session_data session_data, t_data data) {
+void eeprom_initialize(uint8_t magic_value, t_session_data session_data, t_data data)
+{
     EEPROM.write(EEPROM_ADDRESS_MAGIC_BYTE, magic_value);
     eeprom_write_volts(EEPROM_INIT_VALUE_VOLTS);
     eeprom_write_mah_spent(EEPROM_INIT_VALUE_MAH_SPENT);
@@ -41,59 +42,68 @@ void eeprom_initialize(uint8_t magic_value, t_session_data session_data, t_data 
     session_data.min_voltage = EEPROM_INIT_VALUE_MIN_VOLTAGE;
     session_data.trip_meters = EEPROM_INIT_VALUE_TRIP_DISTANCE;
     eeprom_write_session_data(session_data);
-    Serial3.println("Initial values from config file written to EEPROM");
+    //Serial3.println("Initial values from config file written to EEPROM");
 }
 
-void eeprom_read_data(t_data* data, t_session_data session_data){
+void eeprom_read_data(t_data *data, t_session_data session_data)
+{
     session_data = eeprom_read_session_data();
     data->mah_left = BATTERY_MAX_MAH * BATTERY_USABLE_CAPACITY - eeprom_read_mah_spent();
     data->trip_km = session_data.trip_meters / 1000.0;
     data->total_km = eeprom_read_total_distance() / 1000.0;
     data->session = &session_data;
-    Serial3.println("Read from EEPROM: trip meters -> " + String(data->session->trip_meters) + " meters");
-    Serial3.println("Read from EEPROM: total km -> " + String(data->total_km) + " km");
+    //Serial3.println("Read from EEPROM: trip meters -> " + String(data->session->trip_meters) + " meters");
+    //Serial3.println("Read from EEPROM: total km -> " + String(data->total_km) + " km");
 }
 
-float eeprom_read_volts() {
+float eeprom_read_volts()
+{
     float volts;
     EEPROM.get(EEPROM_ADDRESS_VOLTS, volts);
     return volts;
 }
 
-void eeprom_write_volts(float volts) {
+void eeprom_write_volts(float volts)
+{
     EEPROM.put(EEPROM_ADDRESS_VOLTS, volts);
-    Serial3.println("Written to EEPROM: Volts -> " + String(volts) + " V");
+    //Serial3.println("Written to EEPROM: Volts -> " + String(volts) + " V");
 }
 
-uint16_t eeprom_read_mah_spent() {
+uint16_t eeprom_read_mah_spent()
+{
     uint16_t mah_spent;
     EEPROM.get(EEPROM_ADDRESS_MAH_SPENT, mah_spent);
     return mah_spent;
 }
 
-void eeprom_write_mah_spent(uint16_t mah_spent) {
+void eeprom_write_mah_spent(uint16_t mah_spent)
+{
     EEPROM.put(EEPROM_ADDRESS_MAH_SPENT, mah_spent);
-    Serial3.println("Written to EEPROM: mAh spent -> " + String(mah_spent) + " mAh");
+    //Serial3.println("Written to EEPROM: mAh spent -> " + String(mah_spent) + " mAh");
 }
 
-uint32_t eeprom_read_total_distance() {
+uint32_t eeprom_read_total_distance()
+{
     uint32_t meters;
     EEPROM.get(EEPROM_ADDRESS_TOTAL_DISTANCE, meters);
     return meters;
 }
 
-void eeprom_write_total_distance(uint32_t meters) {
+void eeprom_write_total_distance(uint32_t meters)
+{
     EEPROM.put(EEPROM_ADDRESS_TOTAL_DISTANCE, meters);
-    Serial3.println("Written to EEPROM: Total m -> " + String(meters) + " meters");
+    //Serial3.println("Written to EEPROM: Total m -> " + String(meters) + " meters");
 }
 
-t_session_data eeprom_read_session_data() {
+t_session_data eeprom_read_session_data()
+{
     t_session_data session_data;
     EEPROM.get(EEPROM_ADDRESS_SESSION_DATA, session_data);
     return session_data;
 }
 
-void eeprom_write_session_data(t_session_data session_data) {
+void eeprom_write_session_data(t_session_data session_data)
+{
     EEPROM.put(EEPROM_ADDRESS_SESSION_DATA, session_data);
-    Serial3.println("Written to EEPROM: Session data, session_data.trip meters -> " + String(session_data.trip_meters));
+    //Serial3.println("Written to EEPROM: Session data, session_data.trip meters -> " + String(session_data.trip_meters));
 }

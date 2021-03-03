@@ -19,7 +19,7 @@
 // uncomment if not using arduino nano every
 // #define ARDUINO_NANO_EVERY
 
-#define VESC_COUNT 1  // number of controllers: 1 = single, 2 = dual (set to 1 for FOCBOX Unity unless you have more than 1)
+#define VESC_COUNT 1 // number of controllers: 1 = single, 2 = dual (set to 1 for FOCBOX Unity unless you have more than 1)
 #define MOTOR_POLE_PAIRS 3
 #define WHEEL_DIAMETER_MM 550
 #define MOTOR_PULLEY_TEETH 1
@@ -39,9 +39,9 @@
 // Set to true to display the temperature in Fahrenheit instead of Celsius.
 #define USE_FAHRENHEIT false
 
-#define BATTERY_S 10  // number of battery cells
-#define BATTERY_MAX_MAH 8000  // battery capacity in mAh
-#define BATTERY_USABLE_CAPACITY 0.8  // [0.0, 1.0]
+#define BATTERY_S 10                // number of battery cells
+#define BATTERY_MAX_MAH 8000        // battery capacity in mAh
+#define BATTERY_USABLE_CAPACITY 0.8 // [0.0, 1.0]
 
 // Changing the EEPROM_MAGIC_VALUE (to any value different from the current, e.g. 42 -> 43) will reset
 // the EEPROM to the values defined below. This is especially handy for pre-setting the total distance
@@ -54,8 +54,8 @@
 #define EEPROM_INIT_VALUE_MILLIS_ELAPSED 0
 #define EEPROM_INIT_VALUE_MILLIS_RIDING 0
 #define EEPROM_INIT_VALUE_MIN_VOLTAGE 60
-#define EEPROM_INIT_VALUE_TRIP_DISTANCE 2390  // meters
-#define EEPROM_INIT_VALUE_TOTAL_DISTANCE 153000  // meters
+#define EEPROM_INIT_VALUE_TRIP_DISTANCE 2390    // meters
+#define EEPROM_INIT_VALUE_TOTAL_DISTANCE 153000 // meters
 
 // After how many meters traveled should the distance (and other values) be stored to EEPROM.
 // The EEPROM lasts for 100,000 write cycles. With EEPROM_UPDATE_EACH_METERS=100, the EEPROM
@@ -76,7 +76,7 @@
 
 // Hold button 1 for this time to reset session data.
 // Hold button 2 for this time to reset the Coulomb counter.
-#define COUNTER_RESET_TIME 3000  // ms
+#define COUNTER_RESET_TIME 3000 // ms
 
 // This corresponds (more or less) to how often data is read from VESC.
 #define UPDATE_DELAY 50 // ms
@@ -89,18 +89,19 @@
 // array may contain any number of values representing equidistant points of the discharge curve. For
 // example, with 5 values, the voltages will be interpreted as 0%, 25%, 50%, 75%, and 100% of the battery
 // capacity respectively.
-#define DISCHARGE_TICKS { \
-    3.5 * BATTERY_S, \
-    3.67 * BATTERY_S, \
-    3.73 * BATTERY_S, \
-    3.76 * BATTERY_S, \
-    3.80 * BATTERY_S, \
-    3.83 * BATTERY_S, \
-    3.86 * BATTERY_S, \
-    3.90 * BATTERY_S, \
-    4.0 * BATTERY_S, \
-    4.2 * BATTERY_S, \
-}
+#define DISCHARGE_TICKS       \
+    {                         \
+        3.5 * BATTERY_S,      \
+            3.67 * BATTERY_S, \
+            3.73 * BATTERY_S, \
+            3.76 * BATTERY_S, \
+            3.80 * BATTERY_S, \
+            3.83 * BATTERY_S, \
+            3.86 * BATTERY_S, \
+            3.90 * BATTERY_S, \
+            4.0 * BATTERY_S,  \
+            4.2 * BATTERY_S,  \
+    }
 
 // If SHOW_AVG_CELL_VOLTAGE is true, average cell voltage is displayed instead of the total battery
 // pack voltage (total voltage is divided by the number of cells).
@@ -113,12 +114,11 @@
 
 // How much the battery voltage must increase since the last remembered state so that
 // so that we think the battery has been charged.
-#define FULL_CHARGE_MIN_INCREASE 0.01  // [0.0, 1.0]
+#define FULL_CHARGE_MIN_INCREASE 0.01 // [0.0, 1.0]
 
 // Minimal percentage of the max battery voltage to consider the battery fully charged.
 // Example: With 0.97, if the max voltage is 50.4 V, then 48.888 V or more is considered fully charged.
-#define FULL_CHARGE_THRESHOLD 0.97  // [0.0, 1.0]
-
+#define FULL_CHARGE_THRESHOLD 0.97 // [0.0, 1.0]
 
 // Remaining battery capacity can be estimated from the battery voltage
 // and from the VESC coulomb counter (number of mAh spent). The VOLTAGE_WEIGHT is
@@ -130,8 +130,8 @@
 // 0.0 = only use coulomb counter for estimating remaining capacity.
 #define VOLTAGE_WEIGHT 1.0
 
-#define SS_YELLOW_SPEED_KPH (MAX_SPEED_KPH*3/5)
-#define SS_RED_SPEED_KPH (MAX_SPEED_KPH*4/5)
+#define SS_YELLOW_SPEED_KPH (MAX_SPEED_KPH * 3 / 5)
+#define SS_RED_SPEED_KPH (MAX_SPEED_KPH * 4 / 5)
 
 // To compile for FOCBOX Unity, uncomment the following line.
 //#define FOCBOX_UNITY 1
@@ -139,7 +139,7 @@
 // enable debug
 #define DEBUG
 
-#define DEB(x) Serial3.println(x)
+// #define DEB(x) Serial3.println(x)
 
 // enable simulated values
 // #define SIM_VALUES
@@ -150,35 +150,35 @@
 #define LEN(X) (sizeof(X) / sizeof(X[0]))
 
 #ifdef ARDUINO_NANO_EVERY
-	#define BUTTON_1_PIN A0
-	#define BUTTON_2_PIN A1
-	#define BUTTON_3_PIN A2
+#define BUTTON_1_PIN A0
+#define BUTTON_2_PIN A1
+#define BUTTON_3_PIN A2
 #else
-	#define BUTTON_1_PIN PB3
-	#define BUTTON_2_PIN PB4
-	#define BUTTON_3_PIN PB5
+#define BUTTON_1_PIN PB3
+#define BUTTON_2_PIN PB4
+#define BUTTON_3_PIN PB5
 #endif
 
 #ifndef ARDUINO_NANO_EVERY
-    #define TFT_RS  PA2   // REGISTER SELECT
-    #define TFT_CS  PA4  // CS
-    #define TFT_RST PA0
-    #define TFT_SDI PA7  // MOSI
-    #define TFT_CLK PA5  // SCK
-    #define TFT_LED 0
+#define TFT_RS PA2 // REGISTER SELECT
+#define TFT_CS PA4 // CS
+#define TFT_RST PA0
+#define TFT_SDI PA7 // MOSI
+#define TFT_CLK PA5 // SCK
+#define TFT_LED 0
 #else
 
-    #define TFT_RS  9   // REGISTER SELECT
-    #ifdef ARDUINO_NANO_EVERY
-        #define TFT_CS  8  // CS
-        #define TFT_RST 10  // TODO: 12 does not work, check why
-    #else 
-        #define TFT_CS  10  // CS
-        #define TFT_RST 12
-    #endif
-    #define TFT_SDI 11  // MOSI
-    #define TFT_CLK 13  // SCK
-    #define TFT_LED 0
+#define TFT_RS 9 // REGISTER SELECT
+#ifdef ARDUINO_NANO_EVERY
+#define TFT_CS 8   // CS
+#define TFT_RST 10 // TODO: 12 does not work, check why
+#else
+#define TFT_CS 10 // CS
+#define TFT_RST 12
+#endif
+#define TFT_SDI 11 // MOSI
+#define TFT_CLK 13 // SCK
+#define TFT_LED 0
 #endif
 
 #endif //ROXIE_CONFIG_H

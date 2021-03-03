@@ -48,14 +48,14 @@ Button button3 = Button(BUTTON_3_PIN);
 //SSD1306Screen ssd1306_screen;
 //ScreenData test;
 
-HardwareSerial Serial3(PB11, PB10);
+//HardwareSerial Serial3(PB11, PB10);
 
 void setup()
 {
     // delay(1000); // Only for testing the EEPROM
 
     // Initialize communication with computer for debugging and with vesc
-    Serial3.begin(115200);
+    //Serial3.begin(115200);
     vesc_comm.init(115200);
 
     attachInterrupt(digitalPinToInterrupt(BUTTON_1_PIN), button1_changed, CHANGE);

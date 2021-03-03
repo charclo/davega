@@ -1,0 +1,15 @@
+{
+  "name": "TFT 22 ILI9225",
+  "keywords": "tft,ili9225",
+  "description": "Arduino driver for the ILI9225 based TFT with SPI Interface",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Nkawu/TFT_22_ILI9225.git"
+  },
+  "authors": {
+  	"name": "Nkawu"
+  },
+  "version": "1.4.4",
+  "frameworks": "arduino",
+  "platforms": "*"
+}
