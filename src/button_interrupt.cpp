@@ -48,11 +48,13 @@ void Button::button_changed()
 	{
 		_fallen_time = millis();
 		_fallen_flag = true;
+		//Serial3.println("low");
 	}
 	else
 	{
 		_risen_flag = true;
 		_risen_time = millis();
+		//Serial3.println("high");
 	}
 }
 

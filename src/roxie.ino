@@ -45,15 +45,12 @@ Button button1 = Button(BUTTON_1_PIN);
 Button button2 = Button(BUTTON_2_PIN);
 Button button3 = Button(BUTTON_3_PIN);
 
-//SSD1306Screen ssd1306_screen;
 //ScreenData test;
 
 //HardwareSerial Serial3(PB11, PB10);
 
 void setup()
 {
-    // delay(1000); // Only for testing the EEPROM
-
     // Initialize communication with computer for debugging and with vesc
     //Serial3.begin(115200);
     vesc_comm.init(115200);
@@ -87,16 +84,13 @@ void setup()
 
     load_startup_values();
     vertical_screen.update(&data);
-
-    //test = ScreenData(&data);
-    //ssd1306_screen.init(test);
 }
 
 void loop()
 {
     check_buttons();
 
-    vesc_comm.fetch_packet();
+     vesc_comm.fetch_packet();
     if (!vesc_comm.is_expected_packet())
     {
         vertical_screen.heartbeat(UPDATE_DELAY, false);
@@ -109,7 +103,6 @@ void loop()
     vertical_screen.update(&data);
     vertical_screen.heartbeat(UPDATE_DELAY, true);
 
-    //ssd1306_screen.update();
 }
 
 void check_buttons()
@@ -119,7 +112,7 @@ void check_buttons()
     button2.update_button();
     button3.update_button();
 
-    if (button2.get_long_click())
+    if(button2.get_long_click())
     {
         startup_trip_meters = 0 - rotations_to_meters(data.tachometer / 6);
         vertical_screen.process_buttons(&data, true);

@@ -31,7 +31,7 @@ void test_vesc_com(void) {
 
 void setup() {
     // NOTE!!! Wait for >2 secs
-    // if board doesn't support software reset via Serial.DTR/RTS
+    // if board doesn't support software reset via Serial3.DTR/RTS
     // delay(2000);
 
     UNITY_BEGIN();
