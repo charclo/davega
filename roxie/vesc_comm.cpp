@@ -19,11 +19,9 @@
 #include "crc.h"
 #include "roxie_config.h"
 
-#ifdef ARDUINO_NANO_EVERY
+
 HardwareSerial &vesc_serial = Serial1;
-#else
-HardwareSerial &vesc_serial = Serial;
-#endif
+
 
 #define PACKET_GET_VALUES_TYPE 4
 #define PACKET_LENGTH_IDENTIFICATION_BYTE_SHORT 2
