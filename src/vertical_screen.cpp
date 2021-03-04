@@ -34,7 +34,7 @@ void VerticalScreen::draw_basic() {
 
     // Draw degrees symbol
     _tft->drawCircle(37, 22, 1, COLOR_WHITE);
-    _tft->drawText(40, 24, _config->imperial_units ?  "F" : "C", COLOR_WHITE);
+    _tft->drawText(40, 24, _config->use_fahrenheit ?  "F" : "C", COLOR_WHITE);
 
     _just_reset = true;
 }
@@ -60,10 +60,11 @@ void VerticalScreen::update(t_data *data) {
     dtostrf(convert_km_to_miles(data->trip_km, _config->imperial_units), 5, 2, value1);
     format_total_distance(convert_km_to_miles(data->total_km, _config->imperial_units), value2);
     dtostrf(data->battery_amps * data->voltage, 4, 0, value3);
-    dtostrf(data->mosfet_celsius, 3, 1, temp_value);
+    dtostrf(convert_temperature(data->mosfet_celsius, _config->use_fahrenheit), 3, 1, temp_value);
 
     
-    tft_util_draw_number(_tft, primary_value, 2, 35, item_color(convert_km_to_miles(data->speed_kph, _config)), COLOR_BLACK, 10, 14);
+    tft_util_draw_number(_tft, primary_value, 2, 35,
+        item_color(convert_km_to_miles(data->speed_kph, _config->imperial_units)), COLOR_BLACK, 10, 14);
     tft_util_draw_number(_tft, value1, 0, 140, COLOR_WHITE, COLOR_BLACK, 2, 6);
     tft_util_draw_number(_tft, value2, 0, 190, COLOR_WHITE, COLOR_BLACK, 2, 6);
     tft_util_draw_number(_tft, value3, 95, 140, COLOR_WHITE, COLOR_BLACK, 2, 6);

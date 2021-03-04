@@ -52,7 +52,9 @@ Button button3 = Button(BUTTON_3_PIN);
 void setup()
 {
     // Initialize communication with computer for debugging and with vesc
-    //Serial3.begin(115200);
+    #ifdef ARDUINO_NANO_EVERY
+        Serial.begin(115200);
+    #endif
     vesc_comm.init(115200);
 
     attachInterrupt(digitalPinToInterrupt(BUTTON_1_PIN), button1_changed, CHANGE);

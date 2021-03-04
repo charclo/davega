@@ -16,14 +16,14 @@
 #ifndef ROXIE_CONFIG_H
 #define ROXIE_CONFIG_H
 
-// uncomment if not using arduino nano every
+// comment if not using arduino nano every
 // #define ARDUINO_NANO_EVERY
 
 #define VESC_COUNT 1 // number of controllers: 1 = single, 2 = dual (set to 1 for FOCBOX Unity unless you have more than 1)
-#define MOTOR_POLE_PAIRS 3
-#define WHEEL_DIAMETER_MM 550
+#define MOTOR_POLE_PAIRS 14
+#define WHEEL_DIAMETER_MM 2100
 #define MOTOR_PULLEY_TEETH 1
-#define WHEEL_PULLEY_TEETH 5
+#define WHEEL_PULLEY_TEETH 6
 
 // 0=portrait, 1=right rotated landscape, 2=reverse portrait, 3=left rotated landscape
 #define SCREEN_ORIENTATION 2
@@ -31,7 +31,9 @@
 // Affects the speed indicator. If MAX_SPEED_KPH is exceeded, no major disaster will happen.
 // The speed indicator will merely indicate the current speed as the max speed (all blue rectangles
 // filled). It will still show the correct number though.
-#define MAX_SPEED_KPH 25
+#define MAX_SPEED_KPH 30
+#define SS_YELLOW_SPEED_KPH (MAX_SPEED_KPH * 3 / 5)
+#define SS_RED_SPEED_KPH (MAX_SPEED_KPH * 4 / 5)
 
 // Set to true to display the distance in miles and the speed in mph.
 #define IMPERIAL_UNITS false
@@ -63,7 +65,7 @@
 // Note that EEPROM is also updated whenever the board comes to a stop (see below), so regardless
 // of how EEPROM_UPDATE_EACH_METERS is set, there won't be missed meters unless Roxie is accidentally
 // reset before saving to EEPROM (which shouldn't happen under normal circumstances).
-#define EEPROM_UPDATE_EACH_METERS 100
+#define EEPROM_UPDATE_EACH_METERS 200
 
 // If the board comes to stop, update EEPROM, unless it was already updated in less than
 // EEPROM_UPDATE_MIN_DELAY_ON_STOP millis when the board stopped. This shouldn't happen
@@ -130,16 +132,21 @@
 // 0.0 = only use coulomb counter for estimating remaining capacity.
 #define VOLTAGE_WEIGHT 1.0
 
-#define SS_YELLOW_SPEED_KPH (MAX_SPEED_KPH * 3 / 5)
-#define SS_RED_SPEED_KPH (MAX_SPEED_KPH * 4 / 5)
-
 // To compile for FOCBOX Unity, uncomment the following line.
 //#define FOCBOX_UNITY 1
 
 // enable debug
 #define DEBUG
 
-// #define DEB(x) Serial3.println(x)
+#ifdef DEBUG
+    #ifdef ARDUINO_NANO_EVERY
+        #define DEB(x) Serial.println(x)
+    #else
+        #define DEB(x) Serial3.println(x)
+    #endif
+#else
+    #define DEB(x)
+#endif
 
 // enable simulated values
 // #define SIM_VALUES
@@ -160,25 +167,24 @@
 #endif
 
 #ifndef ARDUINO_NANO_EVERY
-#define TFT_RS PA2 // REGISTER SELECT
-#define TFT_CS PA4 // CS
-#define TFT_RST PA0
-#define TFT_SDI PA7 // MOSI
-#define TFT_CLK PA5 // SCK
-#define TFT_LED 0
+    #define TFT_RS PA2 // REGISTER SELECT
+    #define TFT_CS PA4 // CS
+    #define TFT_RST PA0
+    #define TFT_SDI PA7 // MOSI
+    #define TFT_CLK PA5 // SCK
+    #define TFT_LED 0
 #else
-
-#define TFT_RS 9 // REGISTER SELECT
-#ifdef ARDUINO_NANO_EVERY
-#define TFT_CS 8   // CS
-#define TFT_RST 10 // TODO: 12 does not work, check why
-#else
-#define TFT_CS 10 // CS
-#define TFT_RST 12
-#endif
-#define TFT_SDI 11 // MOSI
-#define TFT_CLK 13 // SCK
-#define TFT_LED 0
+    #define TFT_RS 9 // REGISTER SELECT
+    #ifdef ARDUINO_NANO_EVERY
+        #define TFT_CS 8   // CS
+        #define TFT_RST 10 // TODO: 12 does not work, check why
+    #else
+        #define TFT_CS 10 // CS
+        #define TFT_RST 12
+    #endif
+    #define TFT_SDI 11 // MOSI
+    #define TFT_CLK 13 // SCK
+    #define TFT_LED 0
 #endif
 
 #endif //ROXIE_CONFIG_H

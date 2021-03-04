@@ -15,6 +15,7 @@
     along with Roxie firmware.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+#include "roxie_config.h"
 #include "util.h"
 #include "data.h"
 #include "eeprom_backup.h"
